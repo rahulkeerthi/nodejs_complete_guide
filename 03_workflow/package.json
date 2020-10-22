@@ -1,0 +1,13 @@
+{
+  "name": "node-js-basic-app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "",
+    "start-dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
