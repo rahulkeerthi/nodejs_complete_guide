@@ -8,7 +8,7 @@ const adminData = require("./admin")
 const router = express.Router()
 
 router.get("/", (req, res, next) => {
-	console.log("shop.js", adminData.products)
+	console.log("shop.js", adminData.products) // we have access to the products array from admin.js
 	res.sendFile(path.join(rootDir, "views", "shop.html"))
 })
 
