@@ -20,7 +20,7 @@ router.get("/add-product", (req, res, next) => {
 	// res.render("add-product", { docTitle: "Add Product", path: "/admin/add-product", activeAddProduct: true, productCSS: true, formsCSS: true })
 
 	// EJS
-	res.render("add-product", { docTitle: "Add Product", path: "/admin/add-product" })
+	res.render("add-product", { docTitle: "Add Product", path: "/admin/add-product", productCSS: true, formsCSS: true })
 })
 
 // /admin/add-product => POST
