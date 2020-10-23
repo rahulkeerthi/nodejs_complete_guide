@@ -5,6 +5,9 @@ const bodyParser = require("body-parser")
 
 const app = express()
 
+app.set("view engine", "pug") // set global config value for view engine on express app
+app.set("views", "views") // set the default folder for views files (default is views anyway)
+
 const adminData = require("./routes/admin")
 const shopRoutes = require("./routes/shop")
 
@@ -15,7 +18,7 @@ app.use("/admin", adminData.routes)
 app.use(shopRoutes)
 
 app.use((req, res, next) => {
-	res.status(404).sendFile(path.join(__dirname, "views", "404.html"))
+	res.status(404).render("404", { docTitle: "Page Not Found" })
 })
 
 app.listen(3000)

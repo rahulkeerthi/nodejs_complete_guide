@@ -8,8 +8,9 @@ const adminData = require("./admin")
 const router = express.Router()
 
 router.get("/", (req, res, next) => {
-	console.log("shop.js", adminData.products) // we have access to the products array from admin.js
-	res.sendFile(path.join(rootDir, "views", "shop.html"))
+	const products = adminData.products // we have access to the products array from admin.js
+	res.render("shop", { prods: products, docTitle: "Shop" }) // pass an object with data to render
+	// res.sendFile(path.join(rootDir, "views", "shop.html"))
 })
 
 module.exports = router
