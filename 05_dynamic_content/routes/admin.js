@@ -17,7 +17,10 @@ router.get("/add-product", (req, res, next) => {
 	// res.render("add-product", { docTitle: "Add Product", path: "/admin/add-product" })
 
 	// HANDLEBARS
-	res.render("add-product", { docTitle: "Add Product", path: "/admin/add-product", activeAddProduct: true, productCSS: true, formsCSS: true })
+	// res.render("add-product", { docTitle: "Add Product", path: "/admin/add-product", activeAddProduct: true, productCSS: true, formsCSS: true })
+
+	// EJS
+	res.render("add-product", { docTitle: "Add Product", path: "/admin/add-product" })
 })
 
 // /admin/add-product => POST
