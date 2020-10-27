@@ -1,7 +1,7 @@
 const Product = require("../models/product")
 
 exports.getAddProduct = (req, res, next) => {
-	res.render("add-product", {
+	res.render("admin/add-product", {
 		docTitle: "Add Product",
 		path: "/admin/add-product",
 	})
@@ -10,15 +10,15 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
 	const product = new Product(req.body.title)
 	product.save()
-	res.redirect("/")
+	res.redirect("/products")
 }
 
 exports.getProducts = async (req, res, next) => {
 	const products = await Product.fetchAll()
-	res.render("shop", {
+	res.render("admin/product-list", {
 		prods: products,
 		hasProducts: products.length > 0,
 		docTitle: "Shop",
-		path: "/",
+		path: "/admin/products",
 	}) // pass an object with data to render
 }
