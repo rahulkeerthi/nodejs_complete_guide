@@ -23,6 +23,7 @@ module.exports = class Product {
 	}
 
 	async save() {
+		this.id = Math.round(Math.random() * 1000000).toString()
 		let products = await getProductsFromFile()
 		products.push(this)
 		try {
@@ -35,5 +36,13 @@ module.exports = class Product {
 	static async fetchAll() {
 		const products = await getProductsFromFile()
 		return products
+	}
+
+	static async findById(prodId) {
+		const products = await getProductsFromFile()
+		const product = products.find(product => {
+			return product.id === prodId
+		})
+		return product
 	}
 }
