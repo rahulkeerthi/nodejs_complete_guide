@@ -1,12 +1,9 @@
-const path = require("path")
+// const path = require("path")
 const express = require("express")
-const rootDir = require("../util/path")
-const adminData = require("./admin")
+// const rootDir = require("../util/path")
 const router = express.Router()
+const productsController = require("../controllers/products")
 
-router.get("/", (req, res, next) => {
-	const products = adminData.products // we have access to the products array from admin.js
-	res.render("shop", { prods: products, hasProducts: products.length > 0, docTitle: "Shop", path: "/" }) // pass an object with data to render
-})
+router.get("/", productsController.getProducts)
 
 module.exports = router
