@@ -4,7 +4,6 @@ exports.getProducts = async (req, res, next) => {
 	const products = await Product.fetchAll()
 	res.render("shop/product-list", {
 		prods: products,
-		hasProducts: products.length > 0,
 		docTitle: "Shop",
 		path: "/products",
 	}) // pass an object with data to render
@@ -24,9 +23,19 @@ exports.getCheckout = (req, res, next) => {
 	})
 }
 
-exports.getIndex = (req, res, next) => {
+exports.getIndex = async (req, res, next) => {
+	const products = await Product.fetchAll()
+
 	res.render("shop/index", {
+		prods: products,
 		docTitle: "Home",
 		path: "/",
+	})
+}
+
+exports.getOrders = (req, res, next) => {
+	res.render("shop/orders", {
+		docTitle: "Your Orders",
+		path: "/orders",
 	})
 }
