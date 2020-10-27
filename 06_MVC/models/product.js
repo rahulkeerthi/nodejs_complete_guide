@@ -22,13 +22,15 @@ module.exports = class Product {
 	async save() {
 		let products = await getProductsFromFile()
 		products.push(this)
-		fs.writeFile(p, JSON.stringify(products), err => {
-			console.error(`error: ${err}`)
-		})
+		try {
+			await fs.writeFile(p, JSON.stringify(products))
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
-	static fetchAll() {
-		const products = getProductsFromFile()
+	static async fetchAll() {
+		const products = await getProductsFromFile()
 		return products
 	}
 }
