@@ -1,4 +1,4 @@
-const products = [] // initialize an empty array for storing products
+const Product = require("../models/product")
 
 exports.getAddProduct = (req, res, next) => {
 	res.render("add-product", {
@@ -8,11 +8,14 @@ exports.getAddProduct = (req, res, next) => {
 }
 
 exports.postAddProduct = (req, res, next) => {
-	products.push({ title: req.body.title }) // add the new product to the products array
+	// products.push({ title: req.body.title }) // add the new product to the products array
+	const product = new Product(req.body.title)
+	product.save()
 	res.redirect("/")
 }
 
-exports.getProducts = (req, res, next) => {
+exports.getProducts = async (req, res, next) => {
+	const products = await Product.fetchAll()
 	res.render("shop", {
 		prods: products,
 		hasProducts: products.length > 0,
