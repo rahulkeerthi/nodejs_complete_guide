@@ -2,6 +2,7 @@ const fs = require("fs").promises
 const path = require("path")
 const rootDir = require("../util/path")
 const p = path.join(rootDir, "data", "products.json")
+const Cart = require("./cart")
 
 const getProductsFromFile = async () => {
 	let products = []
@@ -40,6 +41,18 @@ module.exports = class Product {
 		products[existingProductIndex] = this
 		try {
 			await fs.writeFile(p, JSON.stringify(products))
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	static async delete(prodId) {
+		let products = await getProductsFromFile()
+		const product = products.find(prod => prod.id === prodId)
+		const updatedProducts = products.filter(item => prodId !== item.id)
+		try {
+			await fs.writeFile(p, JSON.stringify(updatedProducts))
+			Cart.deleteProduct(prodId, product.price)
 		} catch (err) {
 			console.log(err)
 		}

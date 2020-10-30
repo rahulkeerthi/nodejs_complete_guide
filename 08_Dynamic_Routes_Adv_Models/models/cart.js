@@ -9,12 +9,13 @@ module.exports = class Cart {
 		let cart = { products: [], totalPrice: 0 }
 		try {
 			data = await fs.readFile(p)
-			cart = JSON.parse(data)
-			cart.totalPrice = Number(cart.totalPrice)
+			if (data) {
+				cart = JSON.parse(data)
+				cart.totalPrice = Number(cart.totalPrice)
+			}
 		} catch (err) {
 			console.log(err)
 		}
-		console.log(cart)
 		// Analyse card and find existing product
 		const existingProductIndex = cart.products.findIndex(product => product.id === id)
 		const existingProduct = cart.products[existingProductIndex]
@@ -31,5 +32,22 @@ module.exports = class Cart {
 		}
 		cart.totalPrice += productPrice
 		fs.writeFile(p, JSON.stringify(cart), err => console.log(err))
+	}
+
+	static async deleteProduct(id, productPrice) {
+		try {
+			data = await fs.readFile(p)
+			let cart = JSON.parse(data)
+			// cart.totalPrice = Number(cart.totalPrice)
+			const updatedCart = { ...cart }
+			const product = updatedCart.products.find(prod => prod.id === id)
+			console.log(product)
+			const productQty = product.qty
+			updatedCart.totalPrice = updatedCart.totalPrice - productPrice * productQty
+			updatedCart.products = updatedCart.products.filter(prod => prod.id !== id)
+			fs.writeFile(p, JSON.stringify(updatedCart), err => console.log(err))
+		} catch (err) {
+			console.log(err)
+		}
 	}
 }
