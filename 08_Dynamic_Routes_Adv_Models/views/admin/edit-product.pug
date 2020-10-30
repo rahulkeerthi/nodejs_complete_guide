@@ -7,19 +7,48 @@ block styles
 
 block content
   main
-    h1 Edit #{product.title}
-      article.card.product-item
-        header.card__header
-          h1.product__title #{product.title}
-        .card__image
-          img(src="https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png", alt="A Book")
-        .card__content
-          h2.product__price $19.99
-          p.product__description A very interesting book about so many even more interesting things!
-        .card__actions
-          button.btn Add to Cart
-    form.product-form(action="/admin/edit-product", method="post")
-      .form-control
-        label(for="title") Title
-        input(type="text", name="title", id="title")
-      button.btn(type="submit") Submit Changes
+    if product
+      h1.text-center Edit #{product.title}
+      .grid
+        article.card.product-item
+          header.card__header
+            h1.product__title #{product.title}
+          .card__image
+            img(src=product.imageUrl, alt=product.title)
+          .card__content
+            h2.product__price #{product.price}
+            p.product__description #{product.description}
+      form.product-form(action="/admin/edit-product", method="post")
+        if errors
+          p(style="color: red; font-weight: bold;") #{errors.message}
+        .form-control
+          label(for="title") Title
+          input(type="text", name="title", id="title" value=product.title)
+        .form-control
+          label(for="description") Description
+          input(type="text", name="description", id="description" value=product.description)
+        .form-control
+          label(for="price") Price
+          input(type="number", name="price", id="price", step="0.01" value=product.price)
+        .form-control
+          label(for="imageUrl") Image URL
+          input(type="text", name="imageUrl", id="imageUrl" value=product.imageUrl)
+        .form-control
+          input(type="hidden", name="id", id="id" value=product.id)
+        button.btn(type="submit") Submit Changes
+    else
+      h1.text-center Add a New Product
+      form.product-form(action="/admin/add-product", method="post")
+        .form-control
+          label(for="title") Title
+          input(type="text", name="title", id="title")
+        .form-control
+          label(for="description") Description
+          input(type="text", name="description", id="description")
+        .form-control
+          label(for="price") Price
+          input(type="number", name="price", id="price", step="0.01")
+        .form-control
+          label(for="imageUrl") Image URL
+          input(type="text", name="imageUrl", id="imageUrl")
+        button.btn(type="submit") Add Product

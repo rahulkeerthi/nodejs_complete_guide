@@ -15,17 +15,29 @@ const getProductsFromFile = async () => {
 }
 
 module.exports = class Product {
-	constructor(title, imageUrl, description, price) {
+	constructor(title, imageUrl, description, price, id) {
 		this.title = title
 		this.imageUrl = imageUrl
 		this.description = description
 		this.price = price
+		this.id = id || null
 	}
 
 	async save() {
 		this.id = Math.round(Math.random() * 1000000).toString()
 		let products = await getProductsFromFile()
 		products.push(this)
+		try {
+			await fs.writeFile(p, JSON.stringify(products))
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	async update() {
+		let products = await getProductsFromFile()
+		const existingProductIndex = products.findIndex(item => this.id === item.id)
+		products[existingProductIndex] = this
 		try {
 			await fs.writeFile(p, JSON.stringify(products))
 		} catch (err) {
@@ -41,7 +53,7 @@ module.exports = class Product {
 	static async findById(prodId) {
 		const products = await getProductsFromFile()
 		const product = products.find(product => {
-			return product.id === prodId
+			return product.id == prodId
 		})
 		return product
 	}

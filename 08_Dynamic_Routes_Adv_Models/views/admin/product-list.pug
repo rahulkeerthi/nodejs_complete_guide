@@ -7,7 +7,7 @@ block styles
 
 block content
   main
-    h1 Our Products
+    h1.text-center Our Products
     if prods.length > 0
       .grid
         each product in prods
@@ -20,8 +20,8 @@ block content
               h2.product__price $#{product.price}
               p.product__description #{product.description}
             .card__actions
-              a.btn(href="/admin/edit-product").btn Edit
-              form(action="/admin/delete-product", method="post")
+              a.btn(href=`/admin/edit-product/${product.id}`) Edit
+              form(action=`/admin/delete-product/${product.id}`, method="post")
                 button.btn Delete
 
     else 
